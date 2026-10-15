@@ -43,7 +43,7 @@ function caseFindings(page) {
     title = '模型结果及后续验证建议';
     lead = `当前合成样本中，“${strongest.name}”与${c.target}的绝对相关系数最高（r = ${strongest.value.toFixed(3)}）。`;
     details = [`当前预测器的留出集 RMSE 为 ${current.rmse.toFixed(3)} a.u.，${improvement>=0?`比均值基线降低 ${improvement.toFixed(1)}%`:`比均值基线增加 ${Math.abs(improvement).toFixed(1)}%`}。`, `后续计算实验可围绕${strongest.name}设置受控参数扫描，比较${c.target}及其空间分布的变化。`, '相关系数仅描述当前 48 条合成样本的统计关联。因果解释需要独立实验验证，相关性排序不等同于 SHAP 归因。'];
-    next = '查看参数响应实验'; link = 'experiment';
+    next = '查看实验配方推演'; link = 'experiment';
   } else return '';
   return `<section class="case-findings"><div class="case-findings-top"><span class="eyebrow">RESULTS / VALIDATION</span><span class="status">当前数据计算结果</span></div><h2>${title}</h2><p class="case-lead">${lead}</p><ul>${details.map(text=>`<li>${text}</li>`).join('')}</ul><a class="secondary" href="#${link}">${next} <span>${labIcon('arrow')}</span></a></section>`;
 }
