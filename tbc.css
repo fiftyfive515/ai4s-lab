@@ -145,3 +145,6 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.5); border-radius: 2px; }
+
+/* Keep the diagnostic controls above the topology interaction layer. */
+#detailPanel { z-index:20; }
