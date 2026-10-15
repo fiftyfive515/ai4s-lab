@@ -1,6 +1,6 @@
 'use strict';
 const ownerQuery = selector => document.querySelector(selector);
-const pageNames = {overview:'实验室总览', monitor:'数据观测', data:'数据工作台', models:'模型评测', experiment:'实验沙盒', trace:'Agent 工作流', efficiency:'关联洞察', about:'关于 Lab', realtime:'实时监控总览', carriers:'载具路径追溯'};
+const pageNames = {overview:'实验室总览', monitor:'数据观测', data:'数据与特征', models:'模型评测', experiment:'参数实验', trace:'分析工作流', efficiency:'关联分析', about:'关于 Lab', realtime:'实时监控总览', carriers:'载具路径追溯'};
 const showOwnerError = text => { ownerQuery('#owner-error').textContent = text; };
 function showLogin() { ownerQuery('#dashboard').hidden = true; ownerQuery('#login-panel').hidden = false; }
 async function loadStats() {

@@ -72,3 +72,11 @@ python3 tools/build_site.py
 手机网络对照结果：GitHub Pages 可访问，workers.dev 出现网络错误。公开分享优先使用 GitHub Pages；Cloudflare Web Analytics 的站点主机名请设置为 `fiftyfive515.github.io`，不包含协议或 `/ai4s-lab/` 路径。
 
 待创建的免费 Pages 名称：`atlas-ai4s`。压缩包内已包含统计接入，上传后在 Web Analytics 里把统计站点主机名设为实际的 Pages 主机名。若名称被占用，确定新名称后还需同步调整统计代码主机名列表。
+
+## 面向研究评阅的版本（v8）
+
+- 清除 emoji 与装饰性字符图标，改为统一的单色 SVG 控件图标。
+- 首页以 AI Research Lab 为标题，文字说明研究对象、数据、方法与评估范围；各模块统一使用数据与特征、参数实验、分析工作流、关联分析等名称。
+- 问数助手标题为 AI agent，小字说明为“分析辅助与结果查询”，并明确当前采用本地规则。
+- 公开构建和上传包不包含 owner 页面、站主脚本、口令、访问数据库或统计读取接口。Cloudflare 公开 token 仅用于上报，统计数据在登录后的 Cloudflare 账户后台读取。
+- 本机统计读取仍要求签名站主会话；权限边界可用 `python3 checks/test_public_boundary.py` 检查。

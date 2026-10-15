@@ -9,3 +9,4 @@ service/admin-assets/
 service/.wrangler/
 .DS_Store
 ops-assets/*.png
+checks/rendered/

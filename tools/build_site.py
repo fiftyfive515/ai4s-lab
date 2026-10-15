@@ -8,7 +8,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'public-site'
 FILES = [
-    'index.html', 'app.js', 'cases.js', 'twin.js', 'operations.js',
+    'index.html', 'icons.js', 'app.js', 'cases.js', 'twin.js', 'operations.js',
     'realtime.js', 'styles.css', 'operations.css', 'showcase.css',
     'favicon.svg', 'visit.js', 'cloudflare-analytics.js', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css'
 ]
@@ -29,5 +29,5 @@ if endpoint and (urlsplit(endpoint).scheme != 'https' or not urlsplit(endpoint).
     + 'window.AI_RESEARCH_ANALYTICS_ENDPOINT = ' + json.dumps(endpoint) + ';\n'
 )
 (OUT / '.nojekyll').touch()
-(OUT / '404.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>页面不存在</title><body style="background:#101212;color:#c1f879;font:16px system-ui;padding:60px"><h1>这个页面还未开放。</h1><p><a style="color:inherit" href="./">返回 AI4S Lab →</a></p></body></html>')
+(OUT / '404.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>页面不存在</title><body style="background:#101212;color:#c1f879;font:16px system-ui;padding:60px"><h1>页面不存在。</h1><p><a style="color:inherit" href="./">返回 AI Research Lab</a></p></body></html>')
 print('Built public-site; owner files and runtime data excluded.')

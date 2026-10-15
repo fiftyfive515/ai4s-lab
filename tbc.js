@@ -267,7 +267,7 @@
             dp.classList.replace('border-red-400', 'border-cyan-300/50');
             dp.querySelector('i').className = "fa-solid fa-microchip text-xl text-cyan-600";
             dp.querySelector('i').parentElement.className = 'w-12 h-12 rounded-full border border-cyan-400 flex items-center justify-center bg-cyan-50 text-cyan-600';
-            document.getElementById('detailText').innerHTML = "System monitoring nominal. Real-time averages displayed. Click left anomalies for quantum tracing.";
+            document.getElementById('detailText').innerHTML = "Synthetic averages displayed. Select an anomaly sample to review its process path.";
 
             document.getElementById('resetBtn').classList.add('hidden');
             currentActiveAlert = null;
@@ -305,9 +305,9 @@
             dp.querySelector('i').className = "fa-solid fa-triangle-exclamation text-xl animate-bounce";
 
             document.getElementById('detailText').innerHTML = `
-                <span class="text-red-600 font-bold">CRITICAL DEVIATION DETECTED in batch [${alert.id}]</span><br>
+                <span class="text-red-600 font-bold">ANOMALY REVIEW FOR SAMPLE [${alert.id}]</span><br>
                 Node <span class="uppercase font-bold text-red-700">${alert.errorName}</span> reported value <span class="bg-red-100 px-1 rounded">${alert.errorValue}</span>.
-                Reason: ${alert.reason}. Yield dropped to ${alert.eff}%.
+                Reason: ${alert.reason}. Synthetic efficiency: ${alert.eff}%.
             `;
 
             document.getElementById('resetBtn').classList.remove('hidden');

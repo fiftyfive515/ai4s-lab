@@ -1,5 +1,22 @@
 /* Shared polish keeps the lab identity; the monitor follows the supplied TBC reference. */
 :root { --showcase-focus: #c1f879; }
+.ui-icon { display:inline-block;width:20px;height:20px;flex-shrink:0;vertical-align:middle; }
+.nav-icon { display:inline-flex;align-items:center;justify-content:center; }
+.brand-mark { font-size:17px;letter-spacing:-1px; }
+.module-grid .module-card .module-icon { color:var(--mint);background:#263020;border-color:#3d4b33; }
+.module-icon .ui-icon { width:22px;height:22px; }
+.module-foot .ui-icon,.skill>i .ui-icon { width:16px;height:16px; }
+.flow-step .ui-icon { width:27px;height:27px; }
+.primary .ui-icon,.secondary .ui-icon { width:16px;height:16px; }
+.icon-button>span { display:inline-flex; }
+.icon-button .ui-icon { width:18px;height:18px; }
+.assistant-fab { display:grid;place-items:center; }
+.assistant-fab .ui-icon { width:24px;height:24px; }
+.sandbox-icon .ui-icon { width:24px;height:24px; }
+.agent-purpose { margin:8px 0 0;font-size:12px;line-height:1.7;color:var(--muted); }
+.dialog-top h2 { margin:10px 0 0; }
+.lab-hero-tags { flex-wrap:wrap; }
+.lab-hero-tags span:before { content:none; }
 .brand { font-size: 16px; letter-spacing: -.5px; }
 .brand>span:last-child { white-space:nowrap; }
 .workspace small, .profile small { font-size: 9px; }
