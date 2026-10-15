@@ -67,6 +67,8 @@ python3 tools/build_site.py
 
 公开站点：https://ai4s-lab.wusr55.workers.dev/#overview
 
-站主登录 Cloudflare 后，打开 https://dash.cloudflare.com/?to=/:account/web-analytics ，选择对应站点查看访问次数、Visits、来源、国家、设备与浏览器等汇总。网页没有统计入口或公开计数。代码仅在 `fiftyfive515.github.io` 和上述 Worker 主机名下加载一次，iframe 中的 TBC 页面不重复加载统计。若更换公开域名，需同步调整 Cloudflare 站点配置和 `cloudflare-analytics.js` 的主机名。
+站主登录 Cloudflare 后，打开 https://dash.cloudflare.com/?to=/:account/web-analytics ，选择对应站点查看访问次数、Visits、来源、国家、设备与浏览器等汇总。网页没有统计入口或公开计数。代码仅在 `fiftyfive515.github.io`、上述 Worker 主机名和待创建的 `atlas-ai4s.pages.dev` 主机名下加载一次，iframe 中的 TBC 页面不重复加载统计。若更换公开域名，需同步调整 Cloudflare 站点配置和 `cloudflare-analytics.js` 的主机名。
 
 手机网络对照结果：GitHub Pages 可访问，workers.dev 出现网络错误。公开分享优先使用 GitHub Pages；Cloudflare Web Analytics 的站点主机名请设置为 `fiftyfive515.github.io`，不包含协议或 `/ai4s-lab/` 路径。
+
+待创建的免费 Pages 名称：`atlas-ai4s`。压缩包内已包含统计接入，上传后在 Web Analytics 里把统计站点主机名设为实际的 Pages 主机名。若名称被占用，确定新名称后还需同步调整统计代码主机名列表。
