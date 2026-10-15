@@ -57,7 +57,7 @@ function opsCarriers(){const frame=opsFrame(),device=frame.devices[opsState.devi
 function stopOpsSimulation(){clearInterval(opsTimer);opsTimer=undefined;}
 function startOpsSimulation(page){
   stopOpsSimulation();
-  if(!['realtime','carriers'].includes(page))return;
+  if(page!=='carriers')return;
   const noMotion=opsState.paused||matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('.ops-console svg').forEach(svg=>{if(noMotion)svg.pauseAnimations?.();else svg.unpauseAnimations?.();});
   if(opsState.paused)return;

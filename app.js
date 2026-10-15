@@ -133,13 +133,10 @@ function render(live = false) {
   clearInterval(playbackTimer);
   page = location.hash.slice(1) || 'overview';
   if (!pages[page]) page = 'overview';
-  const focusKey = document.activeElement?.getAttribute('data-rt-node');
+  document.body.classList.toggle('is-realtime', page === 'realtime');
   const opsFocus = document.activeElement?.getAttribute('data-ops-action');
-  const alertFocus = document.activeElement?.getAttribute('data-rt-alert');
   $('#content').innerHTML = pages[page]();
-  if (focusKey !== null && focusKey !== undefined) document.querySelector('[data-rt-node="' + focusKey + '"]')?.focus({preventScroll:true});
-  else if (alertFocus !== null && alertFocus !== undefined) document.querySelector('[data-rt-alert="' + alertFocus + '"]')?.focus({preventScroll:true});
-  else if (opsFocus) document.querySelector('[data-ops-action="' + opsFocus + '"]')?.focus({preventScroll:true});
+  if (opsFocus) document.querySelector('[data-ops-action="' + opsFocus + '"]')?.focus({preventScroll:true});
   if (['monitor','data','models'].includes(page)) {
     $('#content .page-heading').insertAdjacentHTML('afterend', caseGuide(page));
     $('#content').insertAdjacentHTML('beforeend', caseFindings(page));

@@ -22,7 +22,8 @@ from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parent
 PAGES = {'overview', 'monitor', 'data', 'models', 'experiment', 'trace', 'efficiency', 'about', 'realtime', 'carriers'}
-PUBLIC = {'index.html', 'app.js', 'cases.js', 'twin.js', 'operations.js', 'operations.css', 'styles.css', 'favicon.svg', 'visit.js', 'visit-config.js', 'owner.js', 'realtime.js', 'showcase.css'}
+PUBLIC = {'index.html', 'app.js', 'cases.js', 'twin.js', 'operations.js', 'operations.css', 'styles.css', 'favicon.svg', 'visit.js', 'visit-config.js', 'owner.js', 'realtime.js', 'showcase.css', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css'}
+VENDOR = {'vendor/echarts.min.js', 'vendor/fontawesome/css/all.min.css', 'vendor/fontawesome/webfonts/fa-solid-900.woff2', 'vendor/fontawesome/webfonts/fa-brands-400.woff2', 'vendor/fontawesome/webfonts/fa-regular-400.woff2'}
 OPS_ASSETS = {f'process-{i:02d}.webp' for i in range(1, 5)}
 UTC = timezone.utc
 
@@ -148,8 +149,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
-        self.send_header('X-Frame-Options', 'DENY')
-        self.send_header('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
+        embedded = urlsplit(self.path).path == '/tbc.html'
+        self.send_header('X-Frame-Options', 'SAMEORIGIN' if embedded else 'DENY')
+        frame_ancestors = "'self'" if embedded else "'none'"
+        self.send_header('Content-Security-Policy', f"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors {frame_ancestors}; base-uri 'none'; form-action 'self'")
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()
@@ -178,7 +181,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.reply(200, f'window.ATLAS_VISIT_ENABLED = {enabled};', 'text/javascript; charset=utf-8', head=head)
         name = 'index.html' if path == '/' else path.lstrip('/')
         asset_path = ROOT / 'ops-assets' / Path(name).name if path.startswith('/ops-assets/') else None
-        if name not in PUBLIC and not (asset_path and Path(name).name in OPS_ASSETS and Path(name).name == name.split('/')[-1]):
+        if name not in PUBLIC and name not in VENDOR and not (asset_path and Path(name).name in OPS_ASSETS and Path(name).name == name.split('/')[-1]):
             return self.reply(404, {'error': 'Not found'}, head=head)
         mime = mimetypes.guess_type(name)[0] or 'application/octet-stream'
         return self.reply(200, (asset_path if asset_path else ROOT / name).read_bytes(), mime + '; charset=utf-8', head=head)

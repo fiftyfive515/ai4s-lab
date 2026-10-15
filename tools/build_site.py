@@ -10,7 +10,7 @@ OUT = ROOT / 'public-site'
 FILES = [
     'index.html', 'app.js', 'cases.js', 'twin.js', 'operations.js',
     'realtime.js', 'styles.css', 'operations.css', 'showcase.css',
-    'favicon.svg', 'visit.js'
+    'favicon.svg', 'visit.js', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css'
 ]
 if OUT.exists():
     shutil.rmtree(OUT)
@@ -20,6 +20,7 @@ for name in FILES:
 (OUT / 'ops-assets').mkdir(exist_ok=True)
 for asset in (ROOT / 'ops-assets').glob('*.webp'):
     shutil.copy2(asset, OUT / 'ops-assets' / asset.name)
+shutil.copytree(ROOT / 'vendor', OUT / 'vendor')
 endpoint = os.environ.get('ANALYTICS_ENDPOINT', '').strip()
 if endpoint and (urlsplit(endpoint).scheme != 'https' or not urlsplit(endpoint).netloc):
     raise SystemExit('ANALYTICS_ENDPOINT must be an HTTPS URL')

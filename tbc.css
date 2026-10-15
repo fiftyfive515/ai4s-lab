@@ -1,0 +1,147 @@
+:root {
+            --cyan-glow: #00f2fe;
+            --blue-glow: #4facfe;
+            --alert-glow: #ff0844;
+            --panel-bg: rgba(255, 255, 255, 0.4);
+            --panel-border: rgba(0, 242, 254, 0.3);
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            background: #e8f0f8;
+            overflow: hidden;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        /* 极客风格光晕背景 */
+        .bg-cyber {
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(232, 240, 248, 1) 100%),
+                linear-gradient(rgba(0, 242, 254, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.1) 1px, transparent 1px);
+            background-size: 100% 100%, 50px 50px, 50px 50px;
+            background-position: center center;
+        }
+
+        /* 全息扫描线动画 */
+        .scanner {
+            position: fixed;
+            top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(to bottom, transparent 48%, rgba(0, 242, 254, 0.15) 50%, transparent 52%);
+            background-size: 100% 10px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: scan 10s linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes scan {
+            0% { background-position: 0 -100vh; }
+            100% { background-position: 0 100vh; }
+        }
+
+        /* 全息玻璃面板 (切角科幻风) */
+        .holo-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 0 25px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(255,255,255,0.8);
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+            position: relative;
+        }
+
+        /* 装饰角标 */
+        .holo-panel::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 30px; height: 30px;
+            border-top: 2px solid var(--cyan-glow);
+            border-left: 2px solid var(--cyan-glow);
+        }
+        .holo-panel::after {
+            content: ''; position: absolute; bottom: 0; right: 0;
+            width: 30px; height: 30px;
+            border-bottom: 2px solid var(--cyan-glow);
+            border-right: 2px solid var(--cyan-glow);
+        }
+
+        /* 旋转数据环 */
+        .spin-ring-1 { animation: spin 8s linear infinite; }
+        .spin-ring-2 { animation: spin-reverse 12s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+
+        /* 数字孪生核心节点 */
+        .twin-node {
+            position: relative;
+            width: 120px; height: 120px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 10;
+        }
+
+        .twin-node .ring {
+            position: absolute; inset: 0; border-radius: 50%;
+            border: 2px dashed rgba(79, 172, 254, 0.4);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+        .twin-node .ring-inner {
+            position: absolute; inset: 15px; border-radius: 50%;
+            border: 2px dotted var(--cyan-glow);
+        }
+
+        .twin-node .core {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(200,240,255,1) 100%);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; color: #0f172a;
+            position: relative; z-index: 2;
+        }
+
+        /* 报警状态的数字孪生节点 */
+        .twin-node.alert-mode .ring {
+            border-color: rgba(255, 8, 68, 0.6);
+            box-shadow: 0 0 25px rgba(255, 8, 68, 0.5);
+            animation: pulse-ring 1s infinite alternate;
+        }
+        .twin-node.alert-mode .ring-inner { border-color: var(--alert-glow); }
+        .twin-node.alert-mode .core {
+            background: radial-gradient(circle, #fff 0%, #ffc5c5 100%);
+            box-shadow: 0 0 30px var(--alert-glow);
+            color: #9f1239;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* 能量流动连线 */
+        .energy-path {
+            stroke: rgba(79, 172, 254, 0.3);
+            stroke-width: 4;
+            fill: none;
+        }
+        .energy-flow {
+            stroke: var(--cyan-glow);
+            stroke-width: 4;
+            fill: none;
+            stroke-dasharray: 20 10;
+            animation: flow-anim 1s linear infinite;
+            filter: drop-shadow(0 0 8px var(--cyan-glow));
+        }
+        .energy-path.alert-path { stroke: rgba(255, 8, 68, 0.3); }
+        .energy-flow.alert-flow {
+            stroke: var(--alert-glow);
+            filter: drop-shadow(0 0 8px var(--alert-glow));
+            animation: flow-anim 0.5s linear infinite; /* 报警时流速加快 */
+        }
+        @keyframes flow-anim { to { stroke-dashoffset: -30; } }
+
+        /* 炫酷数字字体模拟 */
+        .font-ds { font-family: 'Courier New', Courier, monospace; letter-spacing: -1px; }
+
+        /* 滚动条隐藏 */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.5); border-radius: 2px; }
