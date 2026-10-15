@@ -2,7 +2,8 @@
 
 // Public site token supplied by the site owner; this is not an API credential.
 (() => {
-  if (location.protocol !== 'https:' || location.hostname !== 'ai4s-lab.wusr55.workers.dev') return;
+  const hosts = new Set(['fiftyfive515.github.io', 'ai4s-lab.wusr55.workers.dev']);
+  if (location.protocol !== 'https:' || !hosts.has(location.hostname)) return;
   if (document.querySelector('script[data-lab-analytics="cloudflare"]')) return;
   const script = document.createElement('script');
   script.type = 'module';

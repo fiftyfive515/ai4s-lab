@@ -23,7 +23,7 @@
 
 推送 main 后由 `.github/workflows/pages.yml` 构建并发布 `public-site/`。子路径资源均使用相对地址，可通过邮件链接直接浏览。
 
-Cloudflare 站点 `ai4s-lab.wusr55.workers.dev` 已接入站主提供的 Web Analytics 代码，部署该版本后开始采集匿名汇总统计；本机预览和 GitHub 域名不会触发此代码。逐条自建记录仍仅在本机启用。GitHub Pages 仅运行静态页面，无法直接运行 Python/SQLite；本机后台在没有公网 HTTPS 接口时也无法接收公开网站的访问。请勿将后台口令放进前端或 GitHub 变量。
+GitHub 公开站点和 Cloudflare Worker 站点均已接入站主提供的 Web Analytics 代码，部署该版本后开始采集匿名汇总统计；本机预览不会触发此代码。面试分享以手机可访问的 GitHub 地址为主。逐条自建记录仍仅在本机启用。GitHub Pages 仅运行静态页面，无法直接运行 Python/SQLite；本机后台在没有公网 HTTPS 接口时也无法接收公开网站的访问。请勿将后台口令放进前端或 GitHub 变量。
 
 若以后部署独立统计服务，只需将其 HTTPS 事件接口设为仓库变量 `ANALYTICS_ENDPOINT` 并重新运行发布流程。事件接收端必须配置允许的站点来源，并对统计读取执行身份认证。
 
@@ -67,4 +67,6 @@ python3 tools/build_site.py
 
 公开站点：https://ai4s-lab.wusr55.workers.dev/#overview
 
-站主登录 Cloudflare 后，打开 https://dash.cloudflare.com/?to=/:account/web-analytics ，选择对应站点查看访问次数、Visits、来源、国家、设备与浏览器等汇总。网页没有统计入口或公开计数。代码仅在上述 Worker 主机名下加载一次，iframe 中的 TBC 页面不重复加载统计。若更换公开域名，需同步调整 Cloudflare 站点配置和 `cloudflare-analytics.js` 的主机名。
+站主登录 Cloudflare 后，打开 https://dash.cloudflare.com/?to=/:account/web-analytics ，选择对应站点查看访问次数、Visits、来源、国家、设备与浏览器等汇总。网页没有统计入口或公开计数。代码仅在 `fiftyfive515.github.io` 和上述 Worker 主机名下加载一次，iframe 中的 TBC 页面不重复加载统计。若更换公开域名，需同步调整 Cloudflare 站点配置和 `cloudflare-analytics.js` 的主机名。
+
+手机网络对照结果：GitHub Pages 可访问，workers.dev 出现网络错误。公开分享优先使用 GitHub Pages；Cloudflare Web Analytics 的站点主机名请设置为 `fiftyfive515.github.io`，不包含协议或 `/ai4s-lab/` 路径。
