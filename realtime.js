@@ -59,7 +59,7 @@ function realtimeDashboard() {
   const uniformity = frame.series.map((v,i) => 98 + Math.cos((i+frame.tick)*.22)*1.5);
   const time = new Date().toLocaleTimeString('zh-CN', {timeZone:'Asia/Shanghai',hour12:false});
   const date = new Date().toLocaleDateString('zh-CN', {timeZone:'Asia/Shanghai'});
-  return `${heading('SYSTEM SIMULATION / DIGITAL TWIN', '实时监控总览', '将时序信号、异常线索与流程路径放在同一个视野。点击异常卡片，探索联动分析。')}
+  return `${heading('dashboard / DIGITAL TWIN', '实时监控总览', '将时序信号、异常线索与流程路径放在同一个视野。点击异常卡片，探索联动分析。')}
   <div class="rt-console ops-console ${opsState.paused?'is-paused':''}">
     <header class="rt-header rt-glass">
       <div class="rt-identity"><div class="rt-atom" aria-hidden="true">◎</div><div><span class="rt-kicker">AI4S / PROCESS INTELLIGENCE</span><h2>Digital Twin Analytics</h2><p>实时数据预警与流程溯源</p></div></div>
