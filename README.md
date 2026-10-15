@@ -23,7 +23,7 @@
 
 推送 main 后由 `.github/workflows/pages.yml` 构建并发布 `public-site/`。子路径资源均使用相对地址，可通过邮件链接直接浏览。
 
-当前按站主选择，**公开版不采集访问事件**。GitHub Pages 仅运行静态页面，无法直接运行 Python/SQLite；本机后台在没有公网 HTTPS 接口时也无法接收公开网站的访问。请勿将后台口令放进前端或 GitHub 变量。
+Cloudflare 站点 `ai4s-lab.wusr55.workers.dev` 已接入站主提供的 Web Analytics 代码，部署该版本后开始采集匿名汇总统计；本机预览和 GitHub 域名不会触发此代码。逐条自建记录仍仅在本机启用。GitHub Pages 仅运行静态页面，无法直接运行 Python/SQLite；本机后台在没有公网 HTTPS 接口时也无法接收公开网站的访问。请勿将后台口令放进前端或 GitHub 变量。
 
 若以后部署独立统计服务，只需将其 HTTPS 事件接口设为仓库变量 `ANALYTICS_ENDPOINT` 并重新运行发布流程。事件接收端必须配置允许的站点来源，并对统计读取执行身份认证。
 
@@ -62,3 +62,9 @@ python3 tools/build_site.py
 权限检查覆盖：访客隔离、口令和数据库文件不可读取、同源提交、输入验证、事件去重、站主会话和登录限流。浏览器检查覆盖十个模块路由、390px 手机布局、监控联动、搜索、模型切换、沙盒推演和助手。
 
 实时监控保留原版大屏布局；手机可横向滑动查看完整看板。直接打开 `tbc.html` 可查看独立原版页面。
+
+## Cloudflare Web Analytics
+
+公开站点：https://ai4s-lab.wusr55.workers.dev/#overview
+
+站主登录 Cloudflare 后，打开 https://dash.cloudflare.com/?to=/:account/web-analytics ，选择对应站点查看访问次数、Visits、来源、国家、设备与浏览器等汇总。网页没有统计入口或公开计数。代码仅在上述 Worker 主机名下加载一次，iframe 中的 TBC 页面不重复加载统计。若更换公开域名，需同步调整 Cloudflare 站点配置和 `cloudflare-analytics.js` 的主机名。

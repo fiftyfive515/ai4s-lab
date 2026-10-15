@@ -22,7 +22,7 @@ from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parent
 PAGES = {'overview', 'monitor', 'data', 'models', 'experiment', 'trace', 'efficiency', 'about', 'realtime', 'carriers'}
-PUBLIC = {'index.html', 'app.js', 'cases.js', 'twin.js', 'operations.js', 'operations.css', 'styles.css', 'favicon.svg', 'visit.js', 'visit-config.js', 'owner.js', 'realtime.js', 'showcase.css', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css'}
+PUBLIC = {'index.html', 'app.js', 'cases.js', 'twin.js', 'operations.js', 'operations.css', 'styles.css', 'favicon.svg', 'visit.js', 'visit-config.js', 'owner.js', 'realtime.js', 'showcase.css', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css', 'cloudflare-analytics.js'}
 VENDOR = {'vendor/echarts.min.js', 'vendor/fontawesome/css/all.min.css', 'vendor/fontawesome/webfonts/fa-solid-900.woff2', 'vendor/fontawesome/webfonts/fa-brands-400.woff2', 'vendor/fontawesome/webfonts/fa-regular-400.woff2'}
 OPS_ASSETS = {f'process-{i:02d}.webp' for i in range(1, 5)}
 UTC = timezone.utc
