@@ -21,7 +21,7 @@ function caseGuide(page) {
   };
   const g = guides[page];
   if (!g) return '';
-  return `<section class="case-guide"><div class="case-guide-intro"><span class="eyebrow">${g.label}</span><h2>${g.title}</h2><p>${g.purpose}</p></div><div class="case-steps">${g.steps.map(([label,text],i)=>`<div><span>0${i+1} / ${label}</span><p>${text}</p></div>`).join('')}</div><div class="case-question"><span>研究问题 / ${c.title}</span><strong>${c.question}</strong><small>合成数据 · 固定随机种子</small></div></section>`;
+  return `<section class="case-guide"><div class="case-guide-intro"><span class="eyebrow">${g.label}</span><h2>${g.title}</h2><p>${g.purpose}</p></div><div class="case-steps">${g.steps.map(([label,text],i)=>`<div><span>0${i+1} / ${label}</span><p>${text}</p></div>`).join('')}</div><div class="case-question"><span>研究问题 / ${c.title}</span><strong>${c.question}</strong><small>变量定义与评估结果</small></div></section>`;
 }
 function caseFindings(page) {
   const data = page === 'monitor' ? currentData() : datasets[state.process], {c,strongest} = caseEvidence(data);
