@@ -23,7 +23,7 @@ from urllib.parse import parse_qs, urlsplit
 ROOT = Path(__file__).resolve().parent
 PAGES = {'overview', 'monitor', 'data', 'models', 'experiment', 'trace', 'efficiency', 'about', 'realtime', 'carriers'}
 PUBLIC = {'index.html', 'app.js', 'cases.js', 'twin.js', 'operations.js', 'operations.css', 'styles.css', 'favicon.svg', 'visit.js', 'visit-config.js', 'owner.js', 'realtime.js', 'showcase.css'}
-OPS_ASSETS = {f'process-{i:02d}.{ext}' for i in range(1, 5) for ext in ('png', 'webp')}
+OPS_ASSETS = {f'process-{i:02d}.webp' for i in range(1, 5)}
 UTC = timezone.utc
 
 

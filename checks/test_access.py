@@ -55,7 +55,7 @@ class AccessTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertNotIn(b'/owner', content)
         self.assertNotIn('访问统计'.encode(), content)
-        for path in ['/realtime.js', '/showcase.css', '/ops-assets/process-01.png']:
+        for path in ['/realtime.js', '/showcase.css', '/ops-assets/process-01.webp']:
             self.assertEqual(self.request(path)[0], 200)
 
     def test_owner_authentication_and_stats(self):
