@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><title>Owner / AI Research Lab</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css?v=2.0.1">
+  <style>
+    body{max-width:1250px;margin:0 auto;padding:40px 25px}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:45px}header a{font-size:13px;color:var(--muted)}h1{font-weight:450;font-size:30px}#login-panel{max-width:450px;margin:80px auto}#login-form{display:grid;gap:15px;margin-top:25px}label{font-size:12px;color:var(--muted)}input[type=password]{padding:12px;background:#101710;border:1px solid #48583a;border-radius:5px;color:var(--text);width:100%}.owner-heading{display:flex;justify-content:space-between;align-items:center;gap:20px}.owner-actions{display:flex;gap:10px;align-items:center}.owner-actions select{max-width:140px}#owner-error{color:var(--orange);font-size:12px;min-height:20px;margin-top:16px}.owner-note{font-size:11px;line-height:1.9;color:var(--muted);margin:18px 0 26px}.owner-panels{display:grid;grid-template-columns:1fr;gap:20px}.owner-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:24px 0}.owner-summary .stat-value{font-size:35px}.page-bars{display:grid;gap:15px}.page-row{display:grid;grid-template-columns:95px 1fr 45px;gap:15px;align-items:center;font-size:12px}.page-row>span:last-child{text-align:right}.bar-track{height:9px}#records td{font-size:10px}#records th{font-size:10px}#last-updated{font-size:10px;color:var(--muted)}[hidden]{display:none!important}@media(max-width:650px){body{padding:25px 15px}.owner-heading{align-items:flex-start;flex-direction:column}.owner-summary{gap:8px}.owner-summary .stat{padding:12px}.owner-summary .stat-value{font-size:26px}.stat-label{font-size:9px}.page-row{grid-template-columns:85px 1fr 30px;gap:8px}header{margin-bottom:30px}}
+  </style>
+  <script src="/owner.js?v=1" defer></script>
+</head>
+<body>
+  <header><div><span class="eyebrow">AI RESEARCH LAB</span><h1>Owner workspace.</h1></div><a href="https://fiftyfive515.github.io/ai4s-lab/">返回 Lab ↗</a></header>
+  <section id="login-panel" class="panel">
+    <span class="eyebrow">PRIVATE / OWNER ACCESS</span><h2 style="margin-top:15px">站主访问统计</h2>
+    <p class="muted">输入服务器生成的站主口令。此入口不会出现在公开页面导航中。</p>
+    <form id="login-form"><label for="owner-key">站主访问口令</label><input id="owner-key" name="owner-key" type="password" autocomplete="current-password" required maxlength="256"><button type="submit" class="primary">进入后台 ↗</button></form>
+  </section>
+  <section id="dashboard" hidden>
+    <div class="owner-heading"><div><span class="eyebrow">FIRST-PARTY / MINIMAL ANALYTICS</span><h2>站点访问统计</h2></div><div class="owner-actions"><select id="range" aria-label="统计时间范围"><option value="1">最近 24 小时</option><option value="7" selected>最近 7 天</option><option value="30">最近 30 天</option></select><button id="refresh" class="secondary">刷新</button><button id="logout" class="text-button">退出</button></div></div>
+    <div class="owner-summary"><div class="stat"><div class="stat-label">页面访问次数 / PV</div><div class="stat-value" id="views">—</div><div class="stat-note">同一会话可访问多个页面</div></div><div class="stat"><div class="stat-label">匿名访问会话</div><div class="stat-value" id="sessions">—</div><div class="stat-note">刷新或新开标签页重新计数</div></div><div class="stat"><div class="stat-label">访问过的页面</div><div class="stat-value" id="page-count">—</div><div class="stat-note">在当前统计时间范围内</div></div></div>
+    <p class="owner-note">仅记录页面、时间、随机会话标识、屏幕大类和来源域名。不保存 IP、完整浏览器信息或设备指纹；不识别真实身份。匿名会话数不等于独立自然人数。记录自动保留 30 天。时间以北京时间显示。</p>
+    <div class="owner-panels"><div class="panel"><div class="panel-head"><h2>页面热度</h2><span id="last-updated"></span></div><div class="page-bars" id="page-bars"></div></div><div class="panel"><div class="panel-head"><h2>最近访问记录</h2><small>最近 200 条 · 仅站主可见</small></div><div class="table-scroll"><table id="records"><thead><tr><th>访问时间</th><th>匿名会话</th><th>页面</th><th>屏幕类型</th><th>来源域名</th></tr></thead><tbody></tbody></table></div></div></div>
+  </section>
+  <p id="owner-error" role="status" aria-live="polite"></p>
+</body>
+</html>

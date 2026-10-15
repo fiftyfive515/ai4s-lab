@@ -1,0 +1,11 @@
+.runtime/
+__pycache__/
+.env
+.env.*
+public-site/
+checks/screenshots/
+node_modules/
+service/admin-assets/
+service/.wrangler/
+.DS_Store
+ops-assets/*.png
