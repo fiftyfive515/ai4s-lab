@@ -1,22 +1,6 @@
 /* global $3Dmol */
 
-const SAMPLE_SI = `data_si
-_cell_length_a 5.4307
-_cell_length_b 5.4307
-_cell_length_c 5.4307
-_cell_angle_alpha 90
-_cell_angle_beta 90
-_cell_angle_gamma 90
-_symmetry_space_group_name_H-M 'P 1'
-loop_
- _atom_site_type_symbol
- _atom_site_label
- _atom_site_fract_x
- _atom_site_fract_y
- _atom_site_fract_z
- Si Si1 0 0 0
- Si Si2 0.25 0.25 0.25
-`;
+const SAMPLE_FAPBI3 = "\n#======================================================================\n# CRYSTAL DATA\n#----------------------------------------------------------------------\ndata_VESTA_phase_1\n\n_chemical_name_common                  'FAPbI3_github                         '\n_cell_length_a                         6.407500\n_cell_length_b                         6.337600\n_cell_length_c                         6.265600\n_cell_angle_alpha                      90.000000\n_cell_angle_beta                       90.000000\n_cell_angle_gamma                      90.000000\n_cell_volume                           254.434572\n_space_group_name_H-M_alt              'P 1'\n_space_group_IT_number                 1\n\nloop_\n_space_group_symop_operation_xyz\n   'x, y, z'\n\nloop_\n   _atom_site_label\n   _atom_site_occupancy\n   _atom_site_fract_x\n   _atom_site_fract_y\n   _atom_site_fract_z\n   _atom_site_adp_type\n   _atom_site_U_iso_or_equiv\n   _atom_site_type_symbol\n   C1         1.0     0.500000     0.500000     0.479013    Uiso  ? C\n   H1         1.0     0.500000     0.500000     0.304696    Uiso  ? H\n   H2         1.0     0.811657     0.500000     0.479844    Uiso  ? H\n   H3         1.0     0.188343     0.500000     0.479844    Uiso  ? H\n   H4         1.0     0.701893     0.500000     0.736126    Uiso  ? H\n   H5         1.0     0.298107     0.500000     0.736126    Uiso  ? H\n   N1         1.0     0.682002     0.500000     0.574285    Uiso  ? N\n   N2         1.0     0.317998     0.500000     0.574285    Uiso  ? N\n   Pb1        1.0     0.000000     -0.000000     0.034176    Uiso  ? Pb\n   I1         1.0     0.500000     -0.000000     0.015647    Uiso  ? I\n   I2         1.0     0.000000     -0.000000     0.537190    Uiso  ? I\n   I3         1.0     0.000000     0.500000     0.080240    Uiso  ? I\n";
 
 const state = { viewer: null, model: null, structure: null, scene: null, boundary: { min: [0, 0, 0], max: [1, 1, 1] }, displayAtoms: [], displayTranslations: [], defaultView: null, history: [], showCell: true, showAxis: true, showLabels: false, style: "ballstick" };
 const $ = (id) => document.getElementById(id);
@@ -221,7 +205,7 @@ function pushHistory(name) { if (!state.structure) return; state.history.push({ 
 function undoStructure() { const previous = state.history.pop(); if (!previous) return; renderStructure(previous.data, previous.name); showToast("已撤销上一步结构操作"); }
 async function loadFile(file) { try { const text = await file.text(); const data = parseStructure(file.name, text); renderStructure(data, file.name, { resetHistory: true }); showToast(`${file.name} 已载入`); } catch (error) { showToast(error.message || "文件解析失败"); } }
 async function loadSampleFile(path, name, fallback = null) { try { const response = await fetch(path, { cache: "no-store" }); if (!response.ok) throw new Error(`示例文件请求失败（${response.status}）`); const text = await response.text(); renderStructure(parseCif(text), name, { resetHistory: true }); showToast(`${name} 已载入`); } catch (error) { if (!fallback) { showToast(error.message || "示例载入失败"); return; } renderStructure(parseCif(fallback), name, { resetHistory: true }); showToast(`${name} 已使用内置副本载入`); } }
-async function loadSample() { await loadSampleFile("./sample-fapbi3.cif", "FAPbI3.cif"); }
+function loadSample() { renderStructure(parseCif(SAMPLE_FAPBI3), "FAPbI3.cif", { resetHistory: true }); showToast("FAPbI3 示例已载入"); }
 
 function setup() {
   state.viewer = $3Dmol.createViewer(elements.molViewer, { backgroundColor: "#fbfcfa", antialias: true, disableFog: true, orthographic: true }); state.defaultView = state.viewer.getView();
