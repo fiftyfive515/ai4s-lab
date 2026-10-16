@@ -10,7 +10,7 @@ OUT = ROOT / 'public-site'
 FILES = [
     'index.html', 'icons.js', 'app.js', 'cases.js', 'twin.js', 'operations.js',
     'realtime.js', 'styles.css', 'operations.css', 'showcase.css',
-    'favicon.svg', 'visit.js', 'cloudflare-analytics.js', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css', 'spectrum.js', 'sample-pl-spectrum.csv'
+    'favicon.svg', 'visit.js', 'cloudflare-analytics.js', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css', 'spectrum.js', 'sample-pl-spectrum.csv', 'structure-viewer.html', 'structure-viewer.js', 'structure-viewer.css', 'crystal-core.js', 'sample-fapbi3.cif'
 ]
 if OUT.exists():
     shutil.rmtree(OUT)

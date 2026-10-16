@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Research Lab · 分子与晶体可视化</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./structure-viewer.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#viewer">跳到三维视图</a>
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="brand-copy">
+        <div class="eyebrow">MATERIALS STUDIO / QUICK VIEW</div>
+        <div class="brand-name">AI Research Lab <span>结构可视化</span></div>
+      </div>
+      <div class="topbar-status"><i></i><span id="runtimeStatus">本地运行 · 解析器就绪</span></div>
+    </header>
+
+    <main class="app-shell">
+      <aside class="sidebar left-panel" aria-label="文件与导入">
+        <section class="intro-block">
+          <div class="section-kicker">01 / IMPORT</div>
+          <h1>把结构<br /><em>放进来。</em></h1>
+          <p>快速查看晶体与分子结构。拖入文件后即可旋转、缩放和检查。</p>
+        </section>
+
+        <label class="dropzone" id="dropzone" for="fileInput" tabindex="0">
+          <input id="fileInput" type="file" accept=".mol,.cif,.xyz,.vasp,.poscar,.contcar,.POSCAR,.CONTCAR" />
+          <span class="drop-icon" aria-hidden="true">↥</span>
+          <strong>拖入结构文件</strong>
+          <span>或点击选择 · MOL / CIF / POSCAR / XYZ</span>
+        </label>
+
+        <button class="sample-button" id="sampleButton" type="button">
+          <span class="sample-dot"></span>
+          打开 FAPbI₃ 示例
+          <span class="arrow">↗</span>
+        </button>
+
+        <div class="divider"></div>
+        <section class="source-section">
+          <div class="section-kicker">RECENT SOURCE</div>
+          <div class="source-card" id="sourceCard">
+            <div class="file-glyph">CIF</div>
+            <div class="source-meta">
+              <strong id="fileName">尚未导入文件</strong>
+              <span id="fileSubline">等待一个结构</span>
+            </div>
+            <span class="source-check" id="sourceCheck">·</span>
+          </div>
+        </section>
+
+        <div class="sidebar-foot">
+          <div class="legend-row"><span class="legend-key accent"></span><span>可旋转 · 鼠标拖拽</span></div>
+          <div class="legend-row"><span class="legend-key pale"></span><span>滚轮缩放 · 右键平移</span></div>
+        </div>
+      </aside>
+
+      <section class="viewer-panel" id="viewer" aria-label="三维结构视图">
+        <div class="viewer-toolbar">
+          <div class="toolbar-title"><span class="live-dot"></span><span id="viewerTitle">结构预览</span></div>
+          <div class="toolbar-actions">
+            <button class="icon-button" id="undoButton" type="button" title="撤销上一步结构操作" data-tooltip="撤销上一步结构操作" aria-label="撤销上一步结构操作" disabled>↶</button>
+            <button class="icon-button" id="resetView" type="button" title="重置视角" data-tooltip="重置视角" aria-label="重置视角">⌂</button>
+            <button class="icon-button" id="fitView" type="button" title="适配窗口" data-tooltip="适配窗口" aria-label="适配窗口">⊙</button>
+            <button class="icon-button" id="fullscreenButton" type="button" title="全屏查看" data-tooltip="全屏查看" aria-label="全屏查看">⛶</button>
+          </div>
+        </div>
+        <div class="viewer-stage" id="viewerStage">
+          <div id="molViewer" class="mol-viewer" aria-label="可交互三维分子结构"></div>
+          <div class="empty-state" id="emptyState">
+            <div class="empty-orbit"><span></span><span></span><span></span></div>
+            <strong>等待结构载入</strong>
+            <span>拖入 CIF、POSCAR、MOL 或 XYZ 文件</span>
+          </div>
+          <div class="axis-card" id="orientationAxes">
+            <svg viewBox="0 0 112 112" role="img" aria-label="随结构旋转的 XYZ 笛卡尔坐标方向">
+              <title>XYZ 方向，与结构同步旋转</title>
+              <defs>
+                <marker id="axisArrowX" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#c75a45" /></marker>
+                <marker id="axisArrowY" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#418f66" /></marker>
+                <marker id="axisArrowZ" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#4d7cb2" /></marker>
+              </defs>
+              <g id="axisVectors">
+                <g id="axisX" class="axis-x"><line id="axisLineX" x1="56" y1="56" x2="90" y2="56" marker-end="url(#axisArrowX)" /><circle id="axisDotX" cx="56" cy="56" r="4" visibility="hidden" /><text id="axisTextX" x="102" y="56">X</text></g>
+                <g id="axisY" class="axis-y"><line id="axisLineY" x1="56" y1="56" x2="56" y2="22" marker-end="url(#axisArrowY)" /><circle id="axisDotY" cx="56" cy="56" r="4" visibility="hidden" /><text id="axisTextY" x="56" y="10">Y</text></g>
+                <g id="axisZ" class="axis-z"><line id="axisLineZ" x1="56" y1="56" x2="56" y2="56" visibility="hidden" marker-end="url(#axisArrowZ)" /><circle id="axisDotZ" cx="56" cy="56" r="4" /><text id="axisTextZ" x="68" y="44">Z</text></g>
+              </g>
+              <circle class="axis-origin" cx="56" cy="56" r="2" />
+            </svg>
+          </div>
+          <div class="viewer-hint"><span>DRAG</span> 旋转　<span>SCROLL</span> 缩放　<span>RIGHT</span> 平移</div>
+        </div>
+        <div class="viewer-footer">
+          <div class="footer-note"><span class="tiny-ring"></span><span id="footerMessage">先导入一个结构，开始探索</span></div>
+          <div class="footer-stats"><span id="footerAtomCount">0 atoms</span><span class="footer-separator">·</span><span id="footerCellStatus">non-periodic</span></div>
+        </div>
+      </section>
+
+      <aside class="sidebar inspector-panel" aria-label="结构信息和显示设置">
+        <section class="inspector-section summary-section">
+          <div class="section-kicker">02 / INSPECT</div>
+          <div class="structure-heading"><h2 id="structureName">未载入结构</h2><span class="format-pill" id="formatPill">—</span></div>
+          <p class="structure-caption" id="structureCaption">等待文件导入</p>
+          <div class="metric-grid">
+            <div class="metric"><span>ATOMS</span><strong id="atomCount">—</strong></div>
+            <div class="metric"><span>ELEMENTS</span><strong id="elementCount">—</strong></div>
+            <div class="metric"><span>CELL</span><strong id="cellMetric">—</strong></div>
+            <div class="metric"><span>MODE</span><strong id="modeMetric">—</strong></div>
+          </div>
+        </section>
+
+        <section class="inspector-section">
+          <div class="section-kicker">03 / DISPLAY</div>
+          <div class="control-row"><label for="styleSelect">渲染样式</label><select id="styleSelect"><option value="ballstick">球棍模型</option><option value="spacefill">空间填充</option><option value="polyhedral">多面体</option><option value="line">线框模型</option></select></div>
+          <div class="toggle-row"><span>晶胞边界</span><button class="toggle is-on" id="cellToggle" type="button" aria-pressed="true"><i></i></button></div>
+          <div class="toggle-row"><span>坐标轴</span><button class="toggle is-on" id="axisToggle" type="button" aria-pressed="true"><i></i></button></div>
+          <div class="toggle-row"><span>原子标签</span><button class="toggle" id="labelToggle" type="button" aria-pressed="false"><i></i></button></div>
+        </section>
+
+        <section class="inspector-section cell-section">
+          <div class="section-kicker">04 / LATTICE</div>
+          <div class="lattice-grid" id="latticeGrid"><span class="empty-value">导入周期结构后显示晶格参数</span></div>
+          <div class="supercell-control">
+            <div class="control-title">XYZ 扩胞 <span>周期结构</span></div>
+            <div class="supercell-fields" aria-label="扩胞倍数">
+              <label>a <input id="superA" type="number" min="1" max="8" step="1" value="1" /></label>
+              <label>b <input id="superB" type="number" min="1" max="8" step="1" value="1" /></label>
+              <label>c <input id="superC" type="number" min="1" max="8" step="1" value="1" /></label>
+            </div>
+            <button class="apply-button" id="supercellButton" type="button">应用扩胞 <span>↗</span></button>
+            <p class="control-help">按晶格 a / b / c 方向复制，生成新的周期结构。</p>
+          </div>
+          <div class="supercell-control boundary-control">
+            <div class="control-title">显示边界 <span>分数坐标范围</span></div>
+            <div class="boundary-fields" aria-label="晶胞显示范围">
+              <span></span><span>从</span><span>到</span>
+              <span>a</span><input aria-label="a 显示下限" id="boundaryAMin" type="number" min="-4" max="4" step="0.1" value="0" /><input aria-label="a 显示上限" id="boundaryA" type="number" min="-4" max="4" step="0.1" value="1" />
+              <span>b</span><input aria-label="b 显示下限" id="boundaryBMin" type="number" min="-4" max="4" step="0.1" value="0" /><input aria-label="b 显示上限" id="boundaryB" type="number" min="-4" max="4" step="0.1" value="1" />
+              <span>c</span><input aria-label="c 显示下限" id="boundaryCMin" type="number" min="-4" max="4" step="0.1" value="0" /><input aria-label="c 显示上限" id="boundaryC" type="number" min="-4" max="4" step="0.1" value="1" />
+            </div>
+            <button class="apply-button" id="boundaryButton" type="button">应用显示范围 <span>↗</span></button>
+            <p class="control-help">默认显示一个晶胞，包含边界上的等价原子，并补全中心原子的配体。不会改变原始结构。</p>
+          </div>
+        </section>
+
+        <section class="inspector-section composition-section">
+          <div class="section-kicker">05 / COMPOSITION</div>
+          <div class="composition-list" id="compositionList"><span class="empty-value">—</span></div>
+        </section>
+
+        <section class="inspector-section export-section">
+          <div class="section-kicker">06 / CONVERT</div>
+          <div class="control-row"><label for="exportFormat">导出为</label><select id="exportFormat"></select></div>
+          <button class="export-button" id="exportButton" type="button">下载转换文件 <span>↓</span></button>
+          <p class="control-help" id="conversionHelp">导入结构后显示可用格式。</p>
+        </section>
+
+        <section class="inspector-section atoms-section">
+          <div class="section-kicker">07 / ATOMS</div>
+          <div class="atom-table-wrap">
+            <table class="atom-table">
+              <thead><tr><th>#</th><th>TYPE</th><th>X</th><th>Y</th><th>Z</th></tr></thead>
+              <tbody id="atomTableBody"><tr><td colspan="5" class="empty-table">导入结构后显示原子坐标</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="inspector-foot"><span>QUICK VIEW 0.2</span><span>LOCAL / DOCKER READY</span></div>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./vendor/3Dmol-min.js"></script>
+    <script src="./crystal-core.js"></script>
+    <script src="./structure-viewer.js"></script>
+  </body>
+</html>

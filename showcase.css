@@ -68,6 +68,7 @@ body.is-realtime #content { max-width:none;padding:0;margin:0; }
 body.is-realtime #content.reveal { animation:none; }
 body.is-realtime .main-shell>footer,body.is-realtime .assistant-fab { display:none; }
 .tbc-frame { display:block;width:100%;height:calc(100dvh - 77px);min-height:680px;border:0;background:#e8f0f8; }
+.structure-frame { display:block;width:100%;height:calc(100dvh - 77px);min-height:700px;border:0;background:#f6f8f6; }
 @media(max-width:620px) {
   .visitor-badge { display:none; }
   .skip-link { left:16px; }
@@ -80,5 +81,6 @@ body.is-realtime .main-shell>footer,body.is-realtime .assistant-fab { display:no
   .visit-path>i { font-size:10px; }
   .page-heading p { font-size:11px; }
   .tbc-frame { min-width:1100px;height:max(720px,calc(100dvh - 138px)); }
+  .structure-frame { min-height:760px;height:calc(100dvh - 100px); }
   body.is-realtime #content { overflow-x:auto; }
 }

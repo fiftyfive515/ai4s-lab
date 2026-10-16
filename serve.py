@@ -21,9 +21,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parent
-PAGES = {'overview', 'monitor', 'data', 'models', 'experiment', 'trace', 'efficiency', 'about', 'realtime', 'carriers'}
-PUBLIC = {'index.html', 'icons.js', 'app.js', 'cases.js', 'twin.js', 'operations.js', 'operations.css', 'styles.css', 'favicon.svg', 'visit.js', 'visit-config.js', 'owner.js', 'realtime.js', 'showcase.css', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css', 'sample-pl-spectrum.csv', 'spectrum.js', 'cloudflare-analytics.js'}
-VENDOR = {'vendor/echarts.min.js', 'vendor/fontawesome/css/all.min.css', 'vendor/fontawesome/webfonts/fa-solid-900.woff2', 'vendor/fontawesome/webfonts/fa-brands-400.woff2', 'vendor/fontawesome/webfonts/fa-regular-400.woff2'}
+PAGES = {'overview', 'monitor', 'data', 'models', 'experiment', 'trace', 'efficiency', 'about', 'realtime', 'carriers', 'spectrum', 'structure'}
+PUBLIC = {'index.html', 'icons.js', 'app.js', 'cases.js', 'twin.js', 'spectrum.js', 'structure-viewer.html', 'structure-viewer.js', 'structure-viewer.css', 'crystal-core.js', 'sample-fapbi3.cif', 'operations.js', 'operations.css', 'styles.css', 'favicon.svg', 'visit.js', 'visit-config.js', 'owner.js', 'realtime.js', 'showcase.css', 'tbc.html', 'tbc.css', 'tbc.js', 'tbc-tailwind.css', 'sample-pl-spectrum.csv', 'cloudflare-analytics.js'}
+VENDOR = {'vendor/echarts.min.js', 'vendor/fontawesome/css/all.min.css', 'vendor/fontawesome/webfonts/fa-solid-900.woff2', 'vendor/fontawesome/webfonts/fa-brands-400.woff2', 'vendor/fontawesome/webfonts/fa-regular-400.woff2', 'vendor/3Dmol-min.js'}
 OPS_ASSETS = {f'process-{i:02d}.webp' for i in range(1, 5)}
 UTC = timezone.utc
 
@@ -149,7 +149,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
-        embedded = urlsplit(self.path).path == '/tbc.html'
+        embedded = urlsplit(self.path).path in ('/tbc.html', '/structure-viewer.html')
         self.send_header('X-Frame-Options', 'SAMEORIGIN' if embedded else 'DENY')
         frame_ancestors = "'self'" if embedded else "'none'"
         self.send_header('Content-Security-Policy', f"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors {frame_ancestors}; base-uri 'none'; form-action 'self'")

@@ -6,6 +6,7 @@ const labIconPaths = {
   monitor: '<path d="M3 12h4l3-7 4 14 3-7h4"/>',
   data: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/>',
   spectrum: '<path d="M3 18h3l2-4 3-8 3 11 3-5 2 3h4"/><path d="M3 21h18"/>',
+  structure: '<circle cx="6" cy="6" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="18" r="2"/><path d="m8 7 8-1M7 8l4 8M17 9l-4 7"/>',
   models: '<circle cx="5" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="m7 11 9-5M7 13l9 5"/>',
   experiment: '<path d="M9 3h6M10 3v6l-6 10a1.3 1.3 0 0 0 1.1 2h13.8a1.3 1.3 0 0 0 1.1-2L14 9V3M7 15h10"/>',
   trace: '<rect x="3" y="4" width="6" height="6" rx="1"/><rect x="15" y="14" width="6" height="6" rx="1"/><path d="M9 7h6a3 3 0 0 1 3 3v4M6 10v7h9"/>',

@@ -2,7 +2,7 @@
 // 仅向本站发送最小页面访问事件。不使用 cookie、持久存储或设备指纹。
 (() => {
   if (window.ATLAS_VISIT_ENABLED !== true || !/^https?:$/.test(location.protocol)) return;
-  const pages = new Set(['overview', 'monitor', 'data', 'models', 'experiment', 'trace', 'efficiency', 'about', 'realtime', 'carriers']);
+  const pages = new Set(['overview', 'monitor', 'data', 'models', 'experiment', 'trace', 'efficiency', 'about', 'realtime', 'carriers', 'spectrum', 'structure']);
   const session = crypto.randomUUID(); // 仅驻留当前标签页内存，刷新后重新生成。
   let lastPage;
   function record() {
