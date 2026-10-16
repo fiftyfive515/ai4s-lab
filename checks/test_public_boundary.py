@@ -43,6 +43,8 @@ class PublicBoundaryTests(unittest.TestCase):
             self.assertNotIn(Path(name).suffix, ('.sqlite3', '.db', '.py', '.env'))
         self.assertIn('cloudflare-analytics.js', names)
         self.assertIn('icons.js', names)
+        self.assertIn('spectrum.js', names)
+        self.assertIn('sample-pl-spectrum.csv', names)
         self.assertIn('404.html', names)
 
     def test_public_scripts_have_no_statistics_read_interface(self):

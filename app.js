@@ -2,7 +2,7 @@
 
 // 展示站仅使用确定性生成的合成数据；不导入主平台模块或任何本地数据文件。
 const $ = (selector, root = document) => root.querySelector(selector);
-const names = { overview: '实验室总览', monitor: '数据观测', data: '数据与特征', models: '模型评测', experiment: '实验配方推演', trace: '分析工作流', efficiency: '关联分析', about: '关于 Lab', realtime: '实时监控总览', carriers: '载具路径追溯' };
+const names = { overview: '实验室总览', monitor: '数据观测', data: '数据与特征', spectrum: '谱图拟合', models: '模型评测', experiment: '实验配方推演', trace: '分析工作流', efficiency: '关联分析', about: '关于 Lab', realtime: '实时监控总览', carriers: '载具路径追溯' };
 const state = { process: 'signals', window: '24', search: '', model: 'boost', temperature: 50, duration: 50, flow: 50, carrier: 'DEMO-C001', twinTube: 1, twinZones: [0,0,0,0,0,0], twinBoat: 4, twinTab: 'thermal', twinApplied: null };
 const processes = {
   signals: { title: 'Signal Regression / LPCVD 案例', target: '膜厚响应', unit: 'a.u.', base: 100, features: 3, seed: 11 },
@@ -25,10 +25,11 @@ const modules = [
   ['carriers','carriers','SYSTEM / TRACE','载具路径追溯','匿名载具分组、流程路径与空间分布分析。','TOPOLOGY · SPATIAL ENRICHMENT'],
   ['monitor', 'monitor', '01 / OBSERVE', '数据观测与预警', '时序样本观测、采样覆盖率检查与异常标记。', 'TIME SERIES · ANOMALY DETECTION'],
   ['data', 'data', '02 / ENGINEER', '数据与特征', '合成数据整理、特征定义与样本质量检查。', 'DATA PIPELINE · FEATURE ENGINEERING'],
-  ['models', 'models', '03 / LEARN', '模型评测', '基于相同训练集和留出集比较回归模型误差。', 'REGRESSION · MODEL EVALUATION'],
-  ['experiment', 'experiment', '04 / SIMULATE', '实验配方推演', '在设定参数下计算温区与舟位响应。', 'WHAT-IF · RESPONSE SIMULATION'],
-  ['trace', 'trace', '05 / ORCHESTRATE', '分析工作流', '记录数据读取、质量检查、拟合与评估的计算结果。', 'TOOL USE · OBSERVABLE WORKFLOW'],
-  ['efficiency', 'efficiency', '06 / CONNECT', '关联分析', '计算输入特征与目标响应的 Pearson 相关系数。', 'CORRELATION · INTERPRETABILITY'],
+  ['spectrum', 'spectrum', '03 / FIT', '谱图拟合', '上传或选择 PL 光谱，计算基线、峰位、半峰宽与峰面积。', 'PL SPECTRUM · PEAK DECOMPOSITION'],
+  ['models', 'models', '04 / LEARN', '模型评测', '基于相同训练集和留出集比较回归模型误差。', 'REGRESSION · MODEL EVALUATION'],
+  ['experiment', 'experiment', '05 / SIMULATE', '实验配方推演', '在设定参数下计算温区与舟位响应。', 'WHAT-IF · RESPONSE SIMULATION'],
+  ['trace', 'trace', '06 / ORCHESTRATE', '分析工作流', '记录数据读取、质量检查、拟合与评估的计算结果。', 'TOOL USE · OBSERVABLE WORKFLOW'],
+  ['efficiency', 'efficiency', '07 / CONNECT', '关联分析', '计算输入特征与目标响应的 Pearson 相关系数。', 'CORRELATION · INTERPRETABILITY'],
 ];
 const processSelect = () => `<label for="process">实验数据集</label><select id="process">${Object.entries(processes).map(([key, p]) => `<option value="${key}" ${state.process === key ? 'selected' : ''}>${p.title}</option>`).join('')}</select>`;
 const heading = (eyebrow, title, subtitle) => `<div class="page-heading"><div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p>${subtitle}</p></div><div class="date-stamp">INDEPENDENT AI LAB<span> / 2026</span><br>DATA · METHODS · EXPERIMENTS</div></div>`;
@@ -125,7 +126,7 @@ function efficiency() {
 function about() {
   return `${heading('ABOUT THE LAB', '研究范围与方法', 'AI Research Lab / 数据分析、模型评估与实验配方推演。')}<p class="about-intro">研究内容：实验数据分析、<br>模型验证与<em>动态流程可视化。</em></p><div class="two-col equal"><div class="panel"><span class="eyebrow">RESEARCH SCOPE</span><h2 style="margin-top:18px">实验数据、模型与分析流程</h2><p class="muted">研究示例涵盖特征构建、回归模型比较、统计关联分析及参数响应模拟。</p><p class="muted">支持在三个合成数据集上比较预测器，并在独立的流程模型中观测时序信号、载具分组与空间响应。</p><div class="tag-list"><span>Applied ML</span><span>Model Evaluation</span><span>Agent Workflows</span><span>Interpretability</span><span>Scientific Visualization</span></div></div><div class="panel"><span class="eyebrow">COMPUTATIONAL METHODS</span><h2 style="margin-top:18px">模型与评估方法</h2><div class="architecture">回归方法 / 最小二乘与 kNN（k = 5）<br>评估协议 / 32 条训练样本，16 条留出样本<br>误差指标 / R²、RMSE、MAE<br>实验配方推演 / 六温区与十舟位响应</div></div></div><div class="callout">数据说明：本站采用合成数据进行方法演示，结果不作为真实实验结论。</div><div class="section-heading" style="margin-top:30px"><h2>研究模块索引</h2><span>DATA / METHODS / EXPERIMENTS</span></div><div class="module-grid">${modules.map(([page, icon, index, title, desc]) => `<a class="module-card" href="#${page}"><div class="module-top"><span class="module-icon">${labIcon(icon)}</span><small>${index}</small></div><h3>${title}</h3><p>${desc}</p><div class="module-foot"><span>查看模块</span><span>${labIcon('arrow')}</span></div></a>`).join('')}</div>`;
 }
-const pages = { realtime: realtimeDashboard, carriers: opsCarriers, overview, monitor, data: dataPage, models, experiment, trace, efficiency, about };
+const pages = { realtime: realtimeDashboard, carriers: opsCarriers, overview, monitor, data: dataPage, spectrum: spectrumPage, models, experiment, trace, efficiency, about };
 let page = 'overview', playbackTimer, toastTimer;
 function render(live = false) {
   const particleTime = live ? document.querySelector('.ops-network,.ops-fiber')?.getCurrentTime?.() : undefined;

@@ -1,6 +1,6 @@
 FROM python:3.12-alpine
 WORKDIR /app
-COPY index.html icons.js app.js cases.js twin.js operations.js realtime.js styles.css operations.css showcase.css favicon.svg visit.js visit-config.js owner.html owner.js serve.py tbc.html tbc.css tbc.js tbc-tailwind.css cloudflare-analytics.js ./
+COPY index.html icons.js app.js cases.js twin.js spectrum.js operations.js realtime.js styles.css operations.css showcase.css favicon.svg visit.js visit-config.js owner.html owner.js serve.py tbc.html tbc.css tbc.js tbc-tailwind.css sample-pl-spectrum.csv cloudflare-analytics.js ./
 COPY ops-assets ./ops-assets
 COPY vendor ./vendor
 RUN adduser -D lab && mkdir /data && chown lab:lab /data
